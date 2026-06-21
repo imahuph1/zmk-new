@@ -1,14 +1,40 @@
 manifest:
-  defaults:
-    revision: v0.3
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
+    # dongle_display
+    - name: englmaxi
+      url-base: https://github.com/englmaxi
+    # nice_oled - nice_epaper - dongle_display!view - oled Adapter
+    - name: mctechnology17
+      url-base: https://github.com/mctechnology17
+    # fork of zmk-nice-oled with custom KM medal animation
+    - name: KeebMaker
+      url-base: https://github.com/KeebMaker
   projects:
+    # Pinned to v0.3.0 instead of `main`: ZMK main tracks Zephyr 4.1, whose
+    # board-model rewrite renamed `nice_nano_v2` (now `nice_nano//zmk`) and
+    # split the `WS2812_STRIP` Kconfig symbol per-driver. Bumping this back to
+    # `main` will break every build.yaml entry below until those are updated.
     - name: zmk
       remote: zmkfirmware
+      revision: v0.3.0
       import: app/west.yml
+    # dongle_display
+    - name: zmk-dongle-display
+      remote: englmaxi
+      revision: v0.3
+    # nice_oled - nice_epaper (fork with custom KM medal animation)
+    - name: zmk-nice-oled
+      remote: KeebMaker
+      revision: km-medal-animation
+    # dongle_display!view
+    - name: zmk-dongle-display-view
+      remote: mctechnology17
+      revision: main
+    # oled Adapter
+    - name: zmk-oled-adapter
+      remote: mctechnology17
+      revision: main
   self:
     path: config

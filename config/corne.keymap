@@ -1,0 +1,84 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/led/led.h>
+#include <dt-bindings/zmk/backlight.h>
+#include <dt-bindings/zmk/rgb.h>
+#include <dt-bindings/zmk/reset.h>
+
+&led_strip {
+    chain-length = <27>;
+};
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            display-name = "BAS";
+            // -----------------------------------------------------------------------------------------
+            // |  ESC |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
+            // | SHFT |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
+            // | ALT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | GUI  |
+            //                    | TAB | LWR | ENT |   | SPC | RSE  | ALT |
+
+            bindings = <
+&kp ESC     &kp Q   &kp W   &kp E    &kp R          &kp T           &kp Y       &kp U           &kp I      &kp O    &kp P     &kp DEL
+&mt LSHFT TAB   &kp A   &kp S   &kp D    &lt 2 F        &kp G           &kp H       &kp J           &kp K      &kp L    &kp SEMI  &mt RSHFT SQT
+&kp LALT    &kp Z   &kp X   &kp C    &kp V          &kp B           &kp N       &kp M           &kp COMMA  &kp DOT  &kp FSLH  &kp BSLH
+                            &kp LWIN &mt LCTRL TAB  &lt 1 RET       &lt 2 SPACE &mt RCTRL BSPC  &kp RWIN
+            >;
+        };
+
+        lower_layer {
+            display-name = "LOW";
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  1  |  2  |  3  |  4  |  5  |     |  6  |  7  |  8  |  9  |  0  | BKSP |
+            // | LCTRL| BTCLR | BT0 | BT1 | BT2 | BT3 |   |     |     |  UP |     |     |      |
+            // | ESC  |       | HOME| PGUP| PGDN| END |   |     | LFT | DWN | RGT |     |      |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+            bindings = <
+&studio_unlock  &bt BT_CLR          &bt BT_SEL 0    &bt BT_SEL 1    &bt BT_SEL 2    &bt BT_SEL 3    &trans  &kp HOME    &kp UP      &kp END     &kp LS(LBKT)    &trans
+&sys_reset      &kp LCTRL           &kp LSHFT       &kp LALT        &kp LGUI        &trans          &trans  &kp LEFT    &kp DOWN    &kp RIGHT   &kp LS(RBKT)    &trans
+&trans          &rgb_ug  RGB_TOG    &rgb_ug RGB_EFF &rgb_ug RGB_BRD &rgb_ug RGB_BRI &trans          &trans  &kp LPAR    &kp RPAR    &kp LBKT    &kp RBKT        &trans
+                                                    &trans          &trans          &trans          &trans  &trans      &trans
+            >;
+        };
+
+        raise_layer {
+            display-name = "RAI";
+            // -----------------------------------------------------------------------------------------
+            // |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
+            // | CTRL |RGB_TOG|RGB_HUI|RGB_SAI|RGB_VAI|       |   |  -  |  =  |  [  |  ]  |  \  |  `   |
+            // | SHFT |RGB_MOD|RGB_HUD|RGB_SAD|RGB_VAD|QK_BOOT|   |  _  |  +  |  {  |  }  | "|" |  ~   |
+            //                    | GUI |     | SPC |   | ENT |     | ALT |
+
+            bindings = <
+&trans  &kp GRAVE   &kp PRCNT   &kp PIPE        &kp AMPS        &kp EQUAL       &trans  &kp N7  &kp N8  &kp N9  &kp F1  &kp F2
+&trans  &kp EXCL    &kp AT      &kp HASH        &kp DLLR        &kp LS(DOT)     &trans  &kp N4  &kp N5  &kp N6  &kp F3 &kp F4
+&trans  &kp CARET   &kp ASTRK   &kp LS(MINUS)   &kp LS(EQUAL)   &kp MINUS       &trans  &kp N1  &kp N2  &kp N3  &kp F5 &kp F6
+                                &trans          &trans          &trans          &kp RET &kp N0  &trans
+            >;
+        };
+        extra_1 {
+            status = "reserved";
+        };
+
+        extra_2 {
+            status = "reserved";
+        };
+
+        extra_3 {
+            status = "reserved";
+        };
+    };
+};
